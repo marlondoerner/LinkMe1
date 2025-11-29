@@ -52,8 +52,6 @@ const MapView = ({ mapboxToken, profiles, onProfileClick }: MapViewProps) => {
       "top-right"
     );
 
-    map.current.scrollZoom.disable();
-
     map.current.on("style.load", () => {
       map.current?.setFog({
         color: "rgb(10, 15, 20)",
