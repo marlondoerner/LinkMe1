@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Profile {
   id: string;
@@ -27,6 +28,7 @@ interface MapViewProps {
 const MapView = ({ mapboxToken, profiles, onProfileClick }: MapViewProps) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
+  const markersRef = useRef<mapboxgl.Marker[]>([]);
   const [locations, setLocations] = useState<Location[]>([]);
 
   useEffect(() => {
@@ -113,39 +115,78 @@ const MapView = ({ mapboxToken, profiles, onProfileClick }: MapViewProps) => {
   }, [mapboxToken]);
 
   useEffect(() => {
-    // Load locations for all profiles and add markers
-    // This is a simplified version - in real app would fetch from database
-    if (map.current && profiles.length > 0) {
-      // Add markers for profiles with locations
-      // For demo, we'll add random locations
-      profiles.forEach((profile, index) => {
-        if (!map.current) return;
+    const loadLocations = async () => {
+      const { data, error } = await supabase.from("locations").select("*");
+      if (data && !error) setLocations(data);
+    };
+    loadLocations();
 
-        const lat = (Math.random() - 0.5) * 160;
-        const lng = (Math.random() - 0.5) * 360;
+    // Subscribe to realtime updates for locations
+    const channel = supabase
+      .channel("locations-changes")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "locations",
+        },
+        () => {
+          loadLocations();
+        }
+      )
+      .subscribe();
 
-        const el = document.createElement("div");
-        el.className = "marker";
-        el.style.width = "40px";
-        el.style.height = "40px";
-        el.style.borderRadius = "50%";
-        el.style.border = "3px solid rgba(0, 255, 255, 0.6)";
-        el.style.cursor = "pointer";
-        el.style.backgroundImage = profile.profile_picture_url
-          ? `url(${profile.profile_picture_url})`
-          : "linear-gradient(135deg, rgba(0, 255, 255, 0.3), rgba(255, 0, 255, 0.3))";
-        el.style.backgroundSize = "cover";
-        el.style.backgroundPosition = "center";
-        el.style.boxShadow = "0 0 20px rgba(0, 255, 255, 0.5)";
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
 
-        el.addEventListener("click", () => {
-          onProfileClick(profile);
-        });
+  useEffect(() => {
+    if (!map.current || locations.length === 0) return;
 
-        new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map.current!);
+    // Clear existing markers
+    markersRef.current.forEach(marker => marker.remove());
+    markersRef.current = [];
+
+    // Create a map of profile_id to profile for quick lookup
+    const profileMap = new Map(profiles.map(p => [p.id, p]));
+
+    // Add markers for each location
+    locations.forEach((location) => {
+      const profile = profileMap.get(location.profile_id);
+      if (!profile || !map.current) return;
+
+      const el = document.createElement("div");
+      el.className = "marker";
+      el.style.width = "40px";
+      el.style.height = "40px";
+      el.style.borderRadius = "50%";
+      el.style.border = "3px solid rgba(0, 255, 255, 0.6)";
+      el.style.cursor = "pointer";
+      el.style.backgroundImage = profile.profile_picture_url
+        ? `url(${profile.profile_picture_url})`
+        : "linear-gradient(135deg, rgba(0, 255, 255, 0.3), rgba(255, 0, 255, 0.3))";
+      el.style.backgroundSize = "cover";
+      el.style.backgroundPosition = "center";
+      el.style.boxShadow = "0 0 20px rgba(0, 255, 255, 0.5)";
+
+      el.addEventListener("click", () => {
+        onProfileClick(profile);
       });
-    }
-  }, [profiles, onProfileClick]);
+
+      const marker = new mapboxgl.Marker(el)
+        .setLngLat([location.longitude, location.latitude])
+        .addTo(map.current!);
+      
+      markersRef.current.push(marker);
+    });
+
+    return () => {
+      markersRef.current.forEach(marker => marker.remove());
+      markersRef.current = [];
+    };
+  }, [locations, profiles, onProfileClick]);
 
   return (
     <div className="relative w-full h-full">
