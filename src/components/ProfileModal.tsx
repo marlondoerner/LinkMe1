@@ -1,3 +1,7 @@
+/*
+ * Zweck: Modal zur Anzeige eines Profils mit Social-Links, QR-Code und Kommentaren.
+ * Kurz: Zeigt Profilinformationen; ermöglicht Kommentare (lesbar/schreibbar).
+ */
 import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -51,6 +55,8 @@ const ProfileModal = ({ profile, isOpen, onClose }: ProfileModalProps) => {
     }
   }, [profile]);
 
+  // Lädt Social Links und Kommentare beim Öffnen des Modals
+
   const loadSocialLinks = async () => {
     const { data, error } = await supabase
       .from("social_links")
@@ -61,6 +67,8 @@ const ProfileModal = ({ profile, isOpen, onClose }: ProfileModalProps) => {
       setSocialLinks(data);
     }
   };
+
+  // Lädt Social Links aus der DB
 
   const loadComments = async () => {
     const { data, error } = await supabase
@@ -73,6 +81,8 @@ const ProfileModal = ({ profile, isOpen, onClose }: ProfileModalProps) => {
       setComments(data);
     }
   };
+
+  // Lädt Kommentare (absteigend nach Datum)
 
   const handleAddComment = async () => {
     if (!newComment.trim() || !commenterNumber.trim()) {
@@ -100,6 +110,8 @@ const ProfileModal = ({ profile, isOpen, onClose }: ProfileModalProps) => {
       loadComments();
     }
   };
+
+  // Fügt einen Kommentar zur DB hinzu und aktualisiert die Liste
 
   const profileUrl = `${window.location.origin}/app?profile=${profile.profile_number}`;
 

@@ -1,3 +1,7 @@
+/*
+ * Zweck: Beschriftungs-Label für Formularelemente
+ * Kurz: Stilisierte Radix-UI-/Headless-Komponente.
+ */
 import * as React from "react";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import { cva, type VariantProps } from "class-variance-authority";

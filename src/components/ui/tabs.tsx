@@ -1,3 +1,7 @@
+/*
+ * Zweck: Tab-Navigation mit mehreren Panels
+ * Kurz: Stilisierte Radix-UI-/Headless-Komponente.
+ */
 import * as React from "react";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
 

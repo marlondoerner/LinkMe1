@@ -1,3 +1,7 @@
+/*
+ * Zweck: Fortschrittsbalken
+ * Kurz: Stilisierte Radix-UI-/Headless-Komponente.
+ */
 import * as React from "react";
 import * as ProgressPrimitive from "@radix-ui/react-progress";
 

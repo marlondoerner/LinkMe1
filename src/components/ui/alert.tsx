@@ -1,3 +1,7 @@
+/*
+ * Zweck: Warnmeldungs-Box
+ * Kurz: Stilisierte Radix-UI-/Headless-Komponente.
+ */
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 

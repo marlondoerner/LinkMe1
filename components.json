@@ -1,5 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema.json",
+  "_comment": "Zweck: Shadcn/ui CLI Konfiguration. Kurz: Definiert, wie neue UI-Komponenten installiert/generiert werden.",
   "style": "default",
   "rsc": false,
   "tsx": true,

@@ -1,4 +1,5 @@
 {
+  "_comment": "Zweck: TypeScript Konfiguration für Node/Build-Tools. Kurz: Ziel ES2022, erlaubt TS-Imports für Vite/Config-Dateien.",
   "compilerOptions": {
     "target": "ES2022",
     "lib": ["ES2023"],

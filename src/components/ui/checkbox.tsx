@@ -1,3 +1,7 @@
+/*
+ * Zweck: Checkbox mit Checkmark-Icon
+ * Kurz: Stilisierte Radix-UI-/Headless-Komponente.
+ */
 import * as React from "react";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { Check } from "lucide-react";

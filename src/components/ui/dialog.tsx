@@ -1,3 +1,7 @@
+/*
+ * Zweck: Modal-Dialog mit Overlay und Header/Footer
+ * Kurz: Stilisierte Radix-UI-/Headless-Komponente.
+ */
 import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";

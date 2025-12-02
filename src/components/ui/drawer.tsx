@@ -1,3 +1,7 @@
+/*
+ * Zweck: Seitliches Drawer-Panel
+ * Kurz: Stilisierte Radix-UI-/Headless-Komponente.
+ */
 import * as React from "react";
 import { Drawer as DrawerPrimitive } from "vaul";
 

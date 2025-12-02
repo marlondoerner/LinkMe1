@@ -1,3 +1,7 @@
+/*
+ * Zweck: Range-Slider
+ * Kurz: Stilisierte Radix-UI-/Headless-Komponente.
+ */
 import * as React from "react";
 import * as SliderPrimitive from "@radix-ui/react-slider";
 

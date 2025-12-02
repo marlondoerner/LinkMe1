@@ -1,3 +1,7 @@
+/*
+ * Zweck: Landing-Page / Startseite.
+ * Kurz: Präsentationsseite mit Call-to-Action zur App (animierte UI).
+ */
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -6,6 +10,7 @@ import { MapPin, Link2, Globe } from "lucide-react";
 const Landing = () => {
   const navigate = useNavigate();
 
+  // Rendern der Landing-Page mit animiertem Hintergrund und CTA
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
       {/* Animated background */}

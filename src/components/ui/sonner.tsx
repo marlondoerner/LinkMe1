@@ -1,3 +1,7 @@
+/*
+ * Zweck: Sonner Toast-Integrationen
+ * Kurz: Stilisierte Radix-UI-/Headless-Komponente.
+ */
 import { useTheme } from "next-themes";
 import { Toaster as Sonner, toast } from "sonner";
 

@@ -1,3 +1,9 @@
+/*
+ * Zweck: TypeScript-Definitionen für die Supabase-Datenbankstruktur.
+ * Kurz: Stellt Typen (Table Rows / Insert / Update) für `createClient<Database>` bereit.
+ */
+
+// JSON-Helfertyp, wird in der generierten DB-Typisierung verwendet
 export type Json =
   | string
   | number
@@ -7,14 +13,15 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  // Interner Hinweis: PostgREST/Postgres-Version
   __InternalSupabase: {
     PostgrestVersion: "13.0.5"
   }
+  // `public`-Schema: Tabellen und deren Row/Insert/Update-Typen
   public: {
     Tables: {
       comments: {
+        // Row = Form der gespeicherten Daten
         Row: {
           commenter_number: string
           content: string
@@ -22,6 +29,7 @@ export type Database = {
           id: string
           profile_id: string
         }
+        // Insert = Felder, die beim Einfügen erwartet werden
         Insert: {
           commenter_number: string
           content: string
@@ -29,6 +37,7 @@ export type Database = {
           id?: string
           profile_id: string
         }
+        // Update = optionale Felder für Aktualisierungen
         Update: {
           commenter_number?: string
           content?: string
@@ -144,6 +153,7 @@ export type Database = {
         ]
       }
     }
+    // Views / Functions / Enums / CompositeTypes sind aktuell leer
     Views: {
       [_ in never]: never
     }

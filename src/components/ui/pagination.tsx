@@ -1,3 +1,7 @@
+/*
+ * Zweck: Paginierungs-Steuerelemente
+ * Kurz: Stilisierte Radix-UI-/Headless-Komponente.
+ */
 import * as React from "react";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 

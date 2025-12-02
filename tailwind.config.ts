@@ -1,3 +1,7 @@
+/*
+ * Zweck: Tailwind CSS Konfiguration.
+ * Kurz: Definiert Theme, Custom-Farben, Breakpoints und Tailwind-Plugins.
+ */
 import type { Config } from "tailwindcss";
 
 export default {

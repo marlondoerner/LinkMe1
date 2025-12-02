@@ -1,3 +1,7 @@
+/*
+ * Zweck: Hover-Card
+ * Kurz: Stilisierte Radix-UI-/Headless-Komponente.
+ */
 import * as React from "react";
 import * as HoverCardPrimitive from "@radix-ui/react-hover-card";
 

@@ -1,4 +1,7 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+/*
+ * Zweck: Platzhalter-Indexseite.
+ * Kurz: Minimaler Fallback-Inhalt, kann ersetzt werden.
+ */
 
 const Index = () => {
   return (

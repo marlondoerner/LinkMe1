@@ -1,3 +1,7 @@
+/*
+ * Zweck: Scrollbares Area-Panel
+ * Kurz: Stilisierte Radix-UI-/Headless-Komponente.
+ */
 import * as React from "react";
 import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
 

@@ -1,3 +1,7 @@
+/*
+ * Zweck: Chart/Graph-Komponente
+ * Kurz: Stilisierte Radix-UI-/Headless-Komponente.
+ */
 import * as React from "react";
 import * as RechartsPrimitive from "recharts";
 

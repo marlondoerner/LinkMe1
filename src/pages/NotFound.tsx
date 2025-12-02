@@ -1,9 +1,14 @@
+/*
+ * Zweck: 404-Seite.
+ * Kurz: Meldet und zeigt, dass die angefragte Route nicht existiert.
+ */
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 const NotFound = () => {
   const location = useLocation();
 
+  // Loggt den Pfad für Debugging
   useEffect(() => {
     console.error("404 Error: User attempted to access non-existent route:", location.pathname);
   }, [location.pathname]);

@@ -1,3 +1,7 @@
+/*
+ * Zweck: Profilbild-Avatar mit Fallback-Darstellung
+ * Kurz: Stilisierte Radix-UI-/Headless-Komponente.
+ */
 import * as React from "react";
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 

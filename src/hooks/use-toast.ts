@@ -1,10 +1,16 @@
+/*
+ * Zweck: Globale Toast-Logik (in-memory toaster) für die UI.
+ * Kurz: Verwaltet eine kleine Queue von Toast-Nachrichten, erlaubt Hinzufügen, Update und Dismiss.
+ */
 import * as React from "react";
 
 import type { ToastActionElement, ToastProps } from "@/components/ui/toast";
 
+// Konfiguration: Maximal gleichzeitig sichtbare Toasts und Verzögerung zum Entfernen
 const TOAST_LIMIT = 1;
 const TOAST_REMOVE_DELAY = 1000000;
 
+// Interner Toast-Typ (erweitert UI-Toast Props um id)
 type ToasterToast = ToastProps & {
   id: string;
   title?: React.ReactNode;
@@ -12,6 +18,7 @@ type ToasterToast = ToastProps & {
   action?: ToastActionElement;
 };
 
+// Action-Typen für den internen Reducer
 const actionTypes = {
   ADD_TOAST: "ADD_TOAST",
   UPDATE_TOAST: "UPDATE_TOAST",
@@ -21,6 +28,7 @@ const actionTypes = {
 
 let count = 0;
 
+// Erzeugt eine einfache inkrementelle ID für Toasts
 function genId() {
   count = (count + 1) % Number.MAX_SAFE_INTEGER;
   return count.toString();
@@ -50,6 +58,7 @@ interface State {
   toasts: ToasterToast[];
 }
 
+// Timeout-Map um automatische Entfernung zu tracken
 const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
 
 const addToRemoveQueue = (toastId: string) => {
@@ -68,6 +77,7 @@ const addToRemoveQueue = (toastId: string) => {
   toastTimeouts.set(toastId, timeout);
 };
 
+// Reducer: verwaltet Aktionen für Toasts (ADD / UPDATE / DISMISS / REMOVE)
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case "ADD_TOAST":
@@ -85,8 +95,7 @@ export const reducer = (state: State, action: Action): State => {
     case "DISMISS_TOAST": {
       const { toastId } = action;
 
-      // ! Side effects ! - This could be extracted into a dismissToast() action,
-      // but I'll keep it here for simplicity
+      // Side-effect: Plant Entfernung nach Delay
       if (toastId) {
         addToRemoveQueue(toastId);
       } else {
@@ -121,10 +130,12 @@ export const reducer = (state: State, action: Action): State => {
   }
 };
 
+// Listener/Memory-State für eine einfache globale PubSub-Implementierung
 const listeners: Array<(state: State) => void> = [];
 
 let memoryState: State = { toasts: [] };
 
+// Dispatch-Funktion: wendet Reducer an und informiert Listener
 function dispatch(action: Action) {
   memoryState = reducer(memoryState, action);
   listeners.forEach((listener) => {
@@ -134,6 +145,7 @@ function dispatch(action: Action) {
 
 type Toast = Omit<ToasterToast, "id">;
 
+// Öffnet einen neuen Toast, liefert Steuerfunktionen zurück (dismiss, update)
 function toast({ ...props }: Toast) {
   const id = genId();
 
@@ -163,6 +175,7 @@ function toast({ ...props }: Toast) {
   };
 }
 
+// Hook: useToast - verbindet Komponente mit dem globalen Toast-Store
 function useToast() {
   const [state, setState] = React.useState<State>(memoryState);
 

@@ -1,3 +1,7 @@
+/*
+ * Zweck: Hover-Tooltip mit Positionierung
+ * Kurz: Stilisierte Radix-UI-/Headless-Komponente.
+ */
 import * as React from "react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 

@@ -1,3 +1,7 @@
+/*
+ * Zweck: Modal zum Erstellen/Ändern eines Profils.
+ * Kurz: UI zum Bearbeiten von Profilnummer, Bio, Bild-URL, Social Links und Standorten.
+ */
 import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -60,6 +64,8 @@ const ProfileEditModal = ({ profile, isOpen, onClose }: ProfileEditModalProps) =
     }
   }, [profile]);
 
+  // Lädt initial Social Links und Locations wenn ein Profil übergeben wurde
+
   const loadSocialLinks = async () => {
     if (!profile) return;
 
@@ -73,6 +79,8 @@ const ProfileEditModal = ({ profile, isOpen, onClose }: ProfileEditModalProps) =
     }
   };
 
+  // Lädt Social Links aus der DB für das gegebene Profil
+
   const loadLocations = async () => {
     if (!profile) return;
 
@@ -85,6 +93,8 @@ const ProfileEditModal = ({ profile, isOpen, onClose }: ProfileEditModalProps) =
       setLocations(data);
     }
   };
+
+  // Lädt gespeicherte Standorte für das Profil
 
   const handleAddSocialLink = () => {
     setSocialLinks([...socialLinks, { platform: "", url: "" }]);
@@ -119,6 +129,8 @@ const ProfileEditModal = ({ profile, isOpen, onClose }: ProfileEditModalProps) =
       toast.error("Geolocation is not supported");
     }
   };
+
+  // Fügt aktuellen Standort hinzu (falls Berechtigung vorhanden)
 
   const handleRemoveLocation = async (index: number) => {
     const loc = locations[index];
@@ -219,6 +231,8 @@ const ProfileEditModal = ({ profile, isOpen, onClose }: ProfileEditModalProps) =
       setIsLoading(false);
     }
   };
+
+  // Speichert Profil + zugehörige SocialLinks und Locations in der DB
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

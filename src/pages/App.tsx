@@ -1,3 +1,7 @@
+/*
+ * Zweck: Hauptseite der App mit Suche, Map und Modal-Management.
+ * Kurz: Zeigt Navigation, Map-View, Profile-Anzeige und Edit-Modal.
+ */
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -36,6 +40,7 @@ const AppPage = () => {
       setShowTokenInput(false);
     }
 
+    // initiale Daten laden: eigenes Profil und alle Profile
     loadMyProfile();
     loadAllProfiles();
 

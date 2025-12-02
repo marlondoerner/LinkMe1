@@ -1,3 +1,7 @@
+/*
+ * Zweck: Loading-Skeleton
+ * Kurz: Stilisierte Radix-UI-/Headless-Komponente.
+ */
 import { cn } from "@/lib/utils";
 
 function Skeleton({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {

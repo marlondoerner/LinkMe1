@@ -1,3 +1,7 @@
+/*
+ * Zweck: Floating-Panel mit Trigger und Content
+ * Kurz: Stilisierte Radix-UI-/Headless-Komponente.
+ */
 import * as React from "react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 

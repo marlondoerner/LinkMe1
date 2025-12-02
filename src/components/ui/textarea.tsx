@@ -1,3 +1,7 @@
+/*
+ * Zweck: Mehrzeiliges Text-Input-Feld
+ * Kurz: Stilisierte Radix-UI-/Headless-Komponente.
+ */
 import * as React from "react";
 
 import { cn } from "@/lib/utils";

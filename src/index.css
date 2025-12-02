@@ -1,3 +1,7 @@
+/*
+ * Zweck: Globale Tailwind/CSS-Variablen und Utilities für das Projekt.
+ * Kurz: Design-System (Farben, Gradients, Shadows, Utility-Klassen).
+ */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

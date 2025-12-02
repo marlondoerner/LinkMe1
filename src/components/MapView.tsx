@@ -1,3 +1,7 @@
+/*
+ * Zweck: Weltkarte mit Profil-Markern.
+ * Kurz: Initialisiert Mapbox, lädt `locations` aus Supabase und zeigt Marker mit Profilbild.
+ */
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -30,6 +34,7 @@ const MapView = ({ mapboxToken, profiles, onProfileClick }: MapViewProps) => {
   const map = useRef<mapboxgl.Map | null>(null);
   const markersRef = useRef<mapboxgl.Marker[]>([]);
   const [locations, setLocations] = useState<Location[]>([]);
+  // useEffect: Karte initialisieren und Rotation konfigurieren
 
   useEffect(() => {
     if (!mapContainer.current || !mapboxToken) return;
@@ -112,6 +117,7 @@ const MapView = ({ mapboxToken, profiles, onProfileClick }: MapViewProps) => {
     };
   }, [mapboxToken]);
 
+  // Lädt alle Locations aus der Datenbank und abonniert Realtime-Änderungen
   useEffect(() => {
     const loadLocations = async () => {
       const { data, error } = await supabase.from("locations").select("*");
@@ -140,6 +146,7 @@ const MapView = ({ mapboxToken, profiles, onProfileClick }: MapViewProps) => {
     };
   }, []);
 
+  // Aktualisiert Marker auf der Karte wenn `locations` oder `profiles` sich ändern
   useEffect(() => {
     if (!map.current || locations.length === 0) return;
 

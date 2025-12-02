@@ -1,3 +1,7 @@
+/*
+ * Zweck: Visueller Trennstrich
+ * Kurz: Stilisierte Radix-UI-/Headless-Komponente.
+ */
 import * as React from "react";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
 

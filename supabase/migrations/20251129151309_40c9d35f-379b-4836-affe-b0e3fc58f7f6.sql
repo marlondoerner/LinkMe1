@@ -1,62 +1,65 @@
--- Create profiles table
+-- Zweck: Erstellt die Datenbank-Tabellen (`profiles`, `social_links`, `locations`, `comments`) und RLS-Policies.
+-- Kurz: Schema-Migration für das Supabase-Projekt.
+
+-- Tabelle: profiles - Speichert Nutzerprofil-Informationen
 CREATE TABLE public.profiles (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  profile_number text UNIQUE NOT NULL CHECK (profile_number ~ '^\d{4}$'),
-  bio text,
-  profile_picture_url text,
-  qr_code_url text,
+  profile_number text UNIQUE NOT NULL CHECK (profile_number ~ '^\d{4}$'),  -- 4-stellige eindeutige Nummer
+  bio text,  -- Benutzerbeschreibung
+  profile_picture_url text,  -- URL zum Profilbild
+  qr_code_url text,  -- QR-Code (für Profile teilbar)
   created_at timestamptz DEFAULT now(),
   updated_at timestamptz DEFAULT now()
 );
 
--- Create social_links table
+-- Tabelle: social_links - Social-Media-Links pro Profil
 CREATE TABLE public.social_links (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  profile_id uuid REFERENCES public.profiles(id) ON DELETE CASCADE NOT NULL,
-  platform text NOT NULL,
-  url text NOT NULL,
+  profile_id uuid REFERENCES public.profiles(id) ON DELETE CASCADE NOT NULL,  -- FK zu Profil
+  platform text NOT NULL,  -- z.B. "TikTok", "Instagram"
+  url text NOT NULL,  -- Link zur Social-Media-Seite
   created_at timestamptz DEFAULT now()
 );
 
--- Create locations table
+-- Tabelle: locations - Standorte, die Nutzer auf der Karte markieren
 CREATE TABLE public.locations (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  profile_id uuid REFERENCES public.profiles(id) ON DELETE CASCADE NOT NULL,
-  name text NOT NULL,
-  latitude double precision NOT NULL,
-  longitude double precision NOT NULL,
+  profile_id uuid REFERENCES public.profiles(id) ON DELETE CASCADE NOT NULL,  -- FK zu Profil
+  name text NOT NULL,  -- Standort-Name
+  latitude double precision NOT NULL,  -- Breitengrad
+  longitude double precision NOT NULL,  -- Längengrad
   created_at timestamptz DEFAULT now()
 );
 
--- Create comments table
+-- Tabelle: comments - Kommentare, die andere auf Profile schreiben können
 CREATE TABLE public.comments (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  profile_id uuid REFERENCES public.profiles(id) ON DELETE CASCADE NOT NULL,
-  commenter_number text NOT NULL,
-  content text NOT NULL,
+  profile_id uuid REFERENCES public.profiles(id) ON DELETE CASCADE NOT NULL,  -- FK zu Profil (dessen Profil)
+  commenter_number text NOT NULL,  -- 4-stellige Nummer des Kommentators
+  content text NOT NULL,  -- Kommentarinhalt
   created_at timestamptz DEFAULT now()
 );
 
--- Enable Row Level Security
+-- Row Level Security aktivieren (Datenschutz auf DB-Ebene)
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.social_links ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.locations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.comments ENABLE ROW LEVEL SECURITY;
 
--- Profiles policies (public read, authenticated write)
+-- Policies für `profiles`: öffentlich lesbar, aber veränderbar (Demo-App)
 CREATE POLICY "Profiles are viewable by everyone"
   ON public.profiles FOR SELECT
-  USING (true);
+  USING (true);  -- Jeder kann alle Profile sehen
 
 CREATE POLICY "Users can create profiles"
   ON public.profiles FOR INSERT
-  WITH CHECK (true);
+  WITH CHECK (true);  -- Jeder kann Profile erstellen
 
 CREATE POLICY "Users can update their own profile"
   ON public.profiles FOR UPDATE
-  USING (true);
+  USING (true);  -- Vereinfacht: jeder kann updaten (idealer: nur eigenes Profil)
 
--- Social links policies
+-- Policies für `social_links`: öffentlich, aber nutzbar
 CREATE POLICY "Social links are viewable by everyone"
   ON public.social_links FOR SELECT
   USING (true);
@@ -73,7 +76,7 @@ CREATE POLICY "Users can delete their social links"
   ON public.social_links FOR DELETE
   USING (true);
 
--- Locations policies
+-- Policies für `locations`: öffentlich sichtbar
 CREATE POLICY "Locations are viewable by everyone"
   ON public.locations FOR SELECT
   USING (true);
@@ -86,7 +89,7 @@ CREATE POLICY "Users can delete their locations"
   ON public.locations FOR DELETE
   USING (true);
 
--- Comments policies
+-- Policies für `comments`: öffentlich lesbar, jeder kann kommentieren
 CREATE POLICY "Comments are viewable by everyone"
   ON public.comments FOR SELECT
   USING (true);
@@ -95,13 +98,13 @@ CREATE POLICY "Anyone can create comments"
   ON public.comments FOR INSERT
   WITH CHECK (true);
 
--- Create indexes for better performance
-CREATE INDEX idx_profiles_number ON public.profiles(profile_number);
+-- Indexe: verbessern Abfrage-Performance
+CREATE INDEX idx_profiles_number ON public.profiles(profile_number);  -- Schnelle Suche nach Nummer
 CREATE INDEX idx_social_links_profile ON public.social_links(profile_id);
 CREATE INDEX idx_locations_profile ON public.locations(profile_id);
 CREATE INDEX idx_comments_profile ON public.comments(profile_id);
 
--- Create function to update timestamps
+-- Trigger-Funktion: aktualisiert `updated_at` Timestamp automatisch
 CREATE OR REPLACE FUNCTION public.update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -110,13 +113,13 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Create trigger for automatic timestamp updates
+-- Trigger auf `profiles` registrieren
 CREATE TRIGGER update_profiles_updated_at
 BEFORE UPDATE ON public.profiles
 FOR EACH ROW
 EXECUTE FUNCTION public.update_updated_at_column();
 
--- Enable realtime for all tables
+-- Realtime Subscriptions aktivieren: ermöglicht Live-Updates via WebSocket
 ALTER PUBLICATION supabase_realtime ADD TABLE public.profiles;
 ALTER PUBLICATION supabase_realtime ADD TABLE public.social_links;
 ALTER PUBLICATION supabase_realtime ADD TABLE public.locations;
