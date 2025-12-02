@@ -6,7 +6,7 @@
 
 ## Functionality
 
-- Navigate (route) from the landing page to the app
+- Navigate (route) from the landingpage to the app
 - Create an unique profile (only possible with chosen unused numbers) and set
   - a bio
   - a profile picture link
@@ -18,6 +18,10 @@
   - entering a profile link
 - view profile locations on a map
 - keep the state of the application not only when restarting - all profiles are public for all devices
+- 404 page
+- data is saved by Supabase JavaScript client created in client.ts:
+  - Environment variables e. g. VITE_SUPABASE_URL
+  - Postgres tables e. g. 20251129151309_40c9d35f-379b-4836-affe-b0e3fc58f7f6.sql
 
 ## Unlock full potential (API)
 
