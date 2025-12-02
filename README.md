@@ -38,5 +38,5 @@ This project is built with:
 - Tailwind CSS
 
 
-Build with lovable 
+Build with lovable.dev 
 by Lina & Marlon
