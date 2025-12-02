@@ -17,6 +17,8 @@
   - viewing qr codes of profiles
   - entering a profile link
 - view profile locations on a map
+- comment profiles
+- client-side validating data when adding profile
 - keep the state of the application not only when restarting - all profiles are public for all devices
 - 404 page
 - data is saved by Supabase JavaScript client created in client.ts:
