@@ -26,7 +26,3 @@ data is saved by Supabase JavaScript client created in client.ts to be accessabl
 ## Mapbox API
 
 To view the map you have to generate an api key at [Mapbox](https://console.mapbox.com).
-
-## Authors
-
-Build with lovable.dev by Lina & Marlon
