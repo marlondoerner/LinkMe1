@@ -1,9 +1,5 @@
 # Welcome to LinkMe
 
-## Project location
-
-**URL**: https://marlondoerner.com
-
 ## Functionality
 
 - Navigate (route) from the landingpage to the app
@@ -29,7 +25,10 @@
 
 To view the map you have to generate an api key at [Mapbox](https://console.mapbox.com).
 
+## Project location
+
+**URL**: https://marlondoerner.com
+
 ## Authors
 
-Build with lovable.dev 
-by Lina & Marlon
+Build with lovable.dev by Lina & Marlon
