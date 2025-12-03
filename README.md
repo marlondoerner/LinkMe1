@@ -29,16 +29,7 @@
 
 To view the map you have to generate an api key at [Mapbox](https://console.mapbox.com).
 
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
+## Authors
 
 Build with lovable.dev 
 by Lina & Marlon
