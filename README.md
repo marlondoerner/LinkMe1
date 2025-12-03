@@ -7,7 +7,7 @@
   - a bio
   - a profile picture link
   - your social media links
-  - your location
+  - your locations
 - View profiles by 
   - searching for profile numbers
   - viewing qr codes of profiles
