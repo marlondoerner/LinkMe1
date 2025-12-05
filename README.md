@@ -34,3 +34,8 @@ Vite starts a local server to load only changed modules again so you dont need t
 ## Tailwind CSS
 
 Tailwind CSS provides CSS-Classes for the styling of LinkMe1.
+
+## QRCodeSVG Library
+
+Encodes an URL int QR-code data and renders it as a scalable SVG graphics to display it in a web app.
+
