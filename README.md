@@ -17,7 +17,7 @@
 - Validating data when adding profile (client-side)
 - Keep the state of the application when restarting (e. g. your Mapbox API key)
 
-## Database
+## Supabase Database
 
 Data is saved by Supabase JavaScript client created in client.ts to be accessable online:
 - Environment variables (e. g. VITE_SUPABASE_URL)
@@ -26,3 +26,11 @@ Data is saved by Supabase JavaScript client created in client.ts to be accessabl
 ## Mapbox API
 
 To view the map you have to generate an api key at [Mapbox](https://console.mapbox.com).
+
+## Vite Integration
+
+Vite starts a local server to load only changed modules again so you dont need to reload.
+
+## Tailwind CSS
+
+Tailwind CSS provides CSS-Classes for the styling of LinkMe1.
