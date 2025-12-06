@@ -15,7 +15,7 @@
   - locating them on the map
 - Comment profiles
 - Validating data when adding profile (client-side)
-- Keep the state of the application when restarting (e. g. your Mapbox API key which is provided through the user interface once)
+- Keep the state of the application when restarting (e. g. your Mapbox API key which should be pasted through the user interface once)
 
 ## Supabase Database
 
